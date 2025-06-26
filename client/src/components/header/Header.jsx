@@ -9,20 +9,28 @@ import { DataContext } from "../../context/DataProvider";
 const Header = () => {
   const navigate = useNavigate();
   const { account } = useContext(DataContext);
+  
+  // Separate states for desktop and mobile dropdowns
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showMobileDropdown, setShowMobileDropdown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
+  const mobileDropdownRef = useRef(null);
 
-  // Add this auth check function
+  // Update the checkAuthAndProceed function to handle redirection properly
   const checkAuthAndProceed = (destination) => {
+    console.log("Attempting to navigate to:", destination); // For debugging
     const accessToken = sessionStorage.getItem('accessToken');
     setMobileMenuOpen(false); // Close the menu regardless
     
     if (!accessToken) {
+      console.log("No token found, redirecting to login"); // For debugging
       // Redirect to login if not authenticated
       navigate('/account', { state: { from: destination } });
     } else {
+      console.log("Token found, proceeding to destination"); // For debugging
       // Proceed to destination if authenticated
       navigate(destination);
     }
@@ -237,12 +245,12 @@ const Header = () => {
             <div className="px-6 py-3">
               <div 
                 className="flex justify-between items-center text-gray-700 hover:text-[#1565D8] text-base font-medium cursor-pointer"
-                onClick={() => setShowDropdown(!showDropdown)}
+                onClick={() => setShowMobileDropdown(!showMobileDropdown)}
               >
                 Pages
                 <ArrowDropDownIcon />
               </div>
-              {showDropdown && (
+              {showMobileDropdown && (
                 <div className="pl-4 mt-2 border-l-2 border-gray-200">
                   <div 
                     onClick={() => checkAuthAndProceed('/create')}
