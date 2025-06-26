@@ -388,7 +388,7 @@ const Home = () => {
                 </Button>
               </Box>
               
-              <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem' }}>
+              <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '1.05rem' }}>
                 Get a response tomorrow if you submit by 9pm today. If we received after 9pm will get a response the following day.
               </Typography>
             </Box>
@@ -475,32 +475,38 @@ const Home = () => {
         py: 8 
       }}>
         <Box className="container mx-auto px-4 md:px-6 lg:px-8">
-          {/* Brand section at top */}
-          <Box sx={{ mb: 7 }}>
+          {/* Brand section at top - centered */}
+          <Box sx={{ mb: 7, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Typography variant="h6" sx={{ 
               fontWeight: 'bold', 
               mb: 2,
-              fontSize: '1.25rem',
+              fontSize: '1.75rem',
               display: 'flex',
-              alignItems: 'center'
+              alignItems: 'center',
+              justifyContent: 'center' // Added for centering
             }}>
               Bloggify<Box component="span" sx={{ color: '#f94144', ml: 0.5 }}>•</Box>
             </Typography>
             <Typography variant="body2" sx={{ 
               color: 'rgba(255,255,255,0.7)', 
               mb: 3,
-              maxWidth: '350px'
+              fontSize: '1.25rem',
+              textAlign: 'center'
             }}>
-              Build a modern and creative website with moonfo
+              Build a modern and creative website
             </Typography>
-            <Box sx={{ display: 'flex', mt: 2 }}>
+            <Box sx={{ 
+              display: 'flex', 
+              mt: 2,
+              justifyContent: 'center' // Added for centering
+            }}>
               {['#f94144', '#f3722c', '#f8961e', '#f9c74f', '#90be6d'].map((color, i) => (
                 <Box key={i} sx={{ 
                   width: 28, 
                   height: 28, 
                   borderRadius: '50%',
                   bgcolor: color,
-                  mr: 1.5
+                  mr: i < 4 ? 1.5 : 0 // Removed margin from last item
                 }}/>
               ))}
             </Box>
