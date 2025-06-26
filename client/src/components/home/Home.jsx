@@ -512,40 +512,26 @@ const Home = () => {
             </Box>
           </Box>
           
-          {/* Menu structure in horizontal format like second image */}
-          <Box sx={{ display: 'flex', flexDirection: {xs: 'column', md: 'row'} }}>
-            {/* Left side - Main categories */}
-            <Box sx={{ width: {xs: '100%', md: '200px'}, mb: {xs: 5, md: 0} }}>
-              <Typography variant="subtitle1" sx={{ 
-                fontWeight: 'bold', 
-                mb: 3,
-                fontSize: '1rem'
-              }}>
-                Product
-              </Typography>
-              
-              <Typography variant="subtitle1" sx={{ 
-                fontWeight: 'bold', 
-                mb: 3,
-                fontSize: '1rem',
-                mt: 6
-              }}>
-                Services
-              </Typography>
-              
-              <Typography variant="subtitle1" sx={{ 
-                fontWeight: 'bold', 
-                mb: 3,
-                fontSize: '1rem',
-                mt: 6
-              }}>
-                Company
-              </Typography>
-            </Box>
-            {/* Right side - Link columns */}
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', flexGrow: 1 }}>
-              {/* Product links */}
-              <Box sx={{ width: {xs: '50%', sm: '33.33%', md: '25%'}, mb: {xs: 4, md: 0} }}>
+          {/* Menu structure in centered format */}
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center'
+          }}>
+            {/* Categories and links in centered Grid */}
+            <Grid container spacing={35} sx={{ maxWidth: '1000px', justifyContent: 'center' }}>
+              {/* Product Column */}
+              <Grid item xs={12} sm={4} md={4}>
+                <Typography variant="subtitle1" sx={{ 
+                  fontWeight: 'bold', 
+                  mb: 2.5,
+                  fontSize: '1.2rem',
+                  textAlign: 'center'
+                }}>
+                  Product
+                </Typography>
                 <Box component="ul" sx={{ p: 0, m: 0, listStyle: 'none' }}>
                   {['Landingpage', 'Features', 'Documentation', 'Referral Program', 'Pricing'].map((item, i) => (
                     <Box component="li" key={i} sx={{ mb: 2.5 }}>
@@ -566,10 +552,18 @@ const Home = () => {
                     </Box>
                   ))}
                 </Box>
-              </Box>
+              </Grid>
               
-              {/* Services links */}
-              <Box sx={{ width: {xs: '50%', sm: '33.33%', md: '25%'}, mb: {xs: 4, md: 0} }}>
+              {/* Services Column */}
+              <Grid item xs={12} sm={4} md={4}>
+                <Typography variant="subtitle1" sx={{ 
+                  fontWeight: 'bold', 
+                  mb: 2.5,
+                  fontSize: '1.2rem',
+                  textAlign: 'center'
+                }}>
+                  Services
+                </Typography>
                 <Box component="ul" sx={{ p: 0, m: 0, listStyle: 'none' }}>
                   {['Documentation', 'Design', 'Themes', 'Illustrations', 'UI Kit'].map((item, i) => (
                     <Box component="li" key={i} sx={{ mb: 2.5 }}>
@@ -590,10 +584,18 @@ const Home = () => {
                     </Box>
                   ))}
                 </Box>
-              </Box>
+              </Grid>
               
-              {/* Company links */}
-              <Box sx={{ width: {xs: '50%', sm: '33.33%', md: '25%'}, mb: {xs: 4, md: 0} }}>
+              {/* Company Column */}
+              <Grid item xs={12} sm={4} md={4}>
+                <Typography variant="subtitle1" sx={{ 
+                  fontWeight: 'bold', 
+                  mb: 2.5,
+                  fontSize: '1.2rem',
+                  textAlign: 'center'
+                }}>
+                  Company
+                </Typography>
                 <Box component="ul" sx={{ p: 0, m: 0, listStyle: 'none' }}>
                   {['About', 'Terms', 'Privacy Policy', 'Careers'].map((item, i) => (
                     <Box component="li" key={i} sx={{ mb: 2.5 }}>
@@ -614,8 +616,8 @@ const Home = () => {
                     </Box>
                   ))}
                 </Box>
-              </Box>
-            </Box>
+              </Grid>
+            </Grid>
           </Box>
         </Box>
       </Box>
