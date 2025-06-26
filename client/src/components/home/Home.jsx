@@ -10,6 +10,7 @@ import blogSVG from '../../assets/undraw_blog_1ca8.svg';
 import blogPostSVG from '../../assets/undraw_blog-post_f68f.svg';
 import fashionBloggingSVG from '../../assets/undraw_fashion-blogging_wfoz.svg';
 import publishSVG from '../../assets/undraw_publish-article_u3z6.svg';
+import bloggifyLogo from "../../assets/Bloggify.png";
 
 // Image Slider/Carousel Component
 const ImageSlider = () => {
@@ -566,16 +567,17 @@ const Home = () => {
         <Box className="container mx-auto px-4 md:px-6 lg:px-8">
           {/* Brand section at top - centered */}
           <Box sx={{ mb: 7, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Typography variant="h6" sx={{ 
-              fontWeight: 'bold', 
-              mb: 2,
-              fontSize: '1.75rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center' // Added for centering
-            }}>
-              Bloggify<Box component="span" sx={{ color: '#f94144', ml: 0.5 }}>•</Box>
-            </Typography>
+            <Box sx={{ mb: 2 }}>
+              <img
+                src={bloggifyLogo}
+                alt="Bloggify"
+                className="h-12 md:h-16 transform scale-300 transition-all duration-300 hover:opacity-90"
+                style={{ 
+                  filter: 'brightness(0) invert(1)',
+                  maxWidth: '180px'
+                }}
+              />
+            </Box>
             <Typography variant="body2" sx={{ 
               color: 'rgba(255,255,255,0.7)', 
               mb: 3,
@@ -587,7 +589,7 @@ const Home = () => {
             <Box sx={{ 
               display: 'flex', 
               mt: 2,
-              justifyContent: 'center' // Added for centering
+              justifyContent: 'center'
             }}>
               {['#f94144', '#f3722c', '#f8961e', '#f9c74f', '#90be6d'].map((color, i) => (
                 <Box key={i} sx={{ 
@@ -595,7 +597,7 @@ const Home = () => {
                   height: 28, 
                   borderRadius: '50%',
                   bgcolor: color,
-                  mr: i < 4 ? 1.5 : 0 // Removed margin from last item
+                  mr: i < 4 ? 1.5 : 0
                 }}/>
               ))}
             </Box>
