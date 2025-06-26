@@ -1,70 +1,120 @@
-# Getting Started with Create React App
+# Bloggify - Modern Blogging Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern, responsive blogging platform built with React, Vite, Tailwind CSS, and Express.js backend.
+
+![Bloggify Platform](./client/src/assets/Bloggify.png)
+
+## Project Overview
+
+This full-stack blogging platform allows users to create, read, update, and delete blog posts, as well as comment on posts. The platform features a modern UI/UX design, user authentication, and responsive design for all devices.
+
+## Features
+
+- **Modern UI/UX**: Sleek interface with Tailwind CSS styling
+- **Responsive Design**: Mobile-friendly with hamburger menu and optimized layouts
+- **User Authentication**: Secure login/signup with JWT
+- **Blog Management**: Create, read, update, and delete blog posts
+- **Interactive Comments**: Comment on blog posts
+- **Image Upload**: Support for blog post images
+- **Category Filtering**: Browse blogs by categories
+- **Newsletter Subscription**: Capture user emails for updates
+- **Password Visibility Toggle**: Enhance user experience during login
+- **SVG Image Slider**: Engaging home page carousel
+- **Responsive Footer**: Modern footer with social links
+
+## Technology Stack
+
+### Frontend
+- **React**: Core UI library
+- **Vite**: Fast build tool (migrated from Create React App)
+- **Tailwind CSS**: Utility-first CSS framework for styling
+- **React Router**: For navigation
+- **Axios**: For API requests
+
+### Backend
+- **Node.js**: Runtime environment
+- **Express.js**: Web framework
+- **MongoDB**: Database
+- **Mongoose**: ODM for MongoDB
+- **JWT**: For authentication
+- **Multer**: For handling file uploads
 
 ## Available Scripts
 
-In the project directory, you can run:
+### Client
 
-### `npm start`
+In the client directory, you can run:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+cd client
+npm install    # Install dependencies
+npm run dev    # Start development server
+npm run build  # Build for production
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The development server will be available at [http://localhost:5173](http://localhost:5173).
 
-### `npm test`
+### Server
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+In the server directory, you can run:
 
-### `npm run build`
+```bash
+cd server
+npm install     # Install dependencies
+npm start       # Start server with Node.js
+# or
+npm run dev     # Start server with nodemon for development
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The server will run on port 8000 by default.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Recent Improvements
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Migrated from Create React App to Vite for faster development
+- Refactored JSX files to use proper .jsx extension for Vite compatibility
+- Replaced styled-components with Tailwind CSS for more consistent styling
+- Redesigned login/signup pages with improved error handling and password visibility toggle
+- Updated header navigation with responsive design and hamburger menu for mobile
+- Improved blog card layout with consistent image aspect ratios
+- Added SVG image slider/carousel to the home page
+- Implemented newsletter subscription section
+- Added modern footer with social links
+- Fixed authentication flow for protected routes
+- Ensured mobile responsiveness throughout the application
 
-### `npm run eject`
+## Setup Instructions
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. Clone the repository
+   ```bash
+   git clone https://github.com/Kanishk1420/Blogging-Platform.git
+   cd blogging-platform
+   ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. Set up environment variables:
+   Create a `.env` file in the server directory with:
+   ```
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+3. Install dependencies and start both client and server:
+   ```bash
+   # Terminal 1 - Client
+   cd client
+   npm install
+   npm run dev
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+   # Terminal 2 - Server
+   cd server
+   npm install
+   npm start
+   ```
 
-## Learn More
+4. Open your browser and navigate to [http://localhost:5173](http://localhost:5173)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Deployment
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The application will be deployed using services after development:
+- Frontend: Vercel, or GitHub Pages
+- Backend: Azure, or Render
+- Database: MongoDB Atlas
