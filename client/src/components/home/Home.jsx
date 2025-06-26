@@ -609,14 +609,18 @@ const Home = () => {
             justifyContent: 'center',
             textAlign: 'center'
           }}>
-            {/* Categories and links in centered Grid */}
-            <Grid container spacing={35} sx={{ maxWidth: '1000px', justifyContent: 'center' }}>
+            {/* Categories and links in centered Grid - UPDATED SPACING FOR MOBILE */}
+            <Grid 
+              container 
+              spacing={{ xs: 4, sm: 8, md: 35 }}
+              sx={{ maxWidth: '1000px', justifyContent: 'center' }}
+            >
               {/* Product Column */}
               <Grid item xs={12} sm={4} md={4}>
                 <Typography variant="subtitle1" sx={{ 
                   fontWeight: 'bold', 
-                  mb: 2.5,
-                  fontSize: '1.2rem',
+                  mb: { xs: 1.5, sm: 2.5 },  // Less margin on mobile
+                  fontSize: { xs: '1.1rem', sm: '1.2rem' },
                   textAlign: 'center'
                 }}>
                   Product
@@ -647,8 +651,8 @@ const Home = () => {
               <Grid item xs={12} sm={4} md={4}>
                 <Typography variant="subtitle1" sx={{ 
                   fontWeight: 'bold', 
-                  mb: 2.5,
-                  fontSize: '1.2rem',
+                  mb: { xs: 1.5, sm: 2.5 },  // Less margin on mobile
+                  fontSize: { xs: '1.1rem', sm: '1.2rem' },
                   textAlign: 'center'
                 }}>
                   Services
@@ -679,8 +683,8 @@ const Home = () => {
               <Grid item xs={12} sm={4} md={4}>
                 <Typography variant="subtitle1" sx={{ 
                   fontWeight: 'bold', 
-                  mb: 2.5,
-                  fontSize: '1.2rem',
+                  mb: { xs: 1.5, sm: 2.5 },  // Less margin on mobile
+                  fontSize: { xs: '1.1rem', sm: '1.2rem' },
                   textAlign: 'center'
                 }}>
                   Company
