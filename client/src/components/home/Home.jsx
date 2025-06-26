@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, TextField, InputAdornment, Typography, Grid, Card, CardContent, CardMedia, Avatar } from '@mui/material';
+import { Box, Button, TextField, InputAdornment, Typography, Grid as LegacyGrid, Card, CardContent, CardMedia, Avatar } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Link, useNavigate } from 'react-router-dom';
@@ -365,15 +365,15 @@ const Home = () => {
             Latest Articles
           </Typography>
           
-          <Grid container spacing={4} justifyContent="center">
+          <LegacyGrid container spacing={4} justifyContent="center">
             {posts.map((post) => (
-              <Grid item xs={12} sm={6} md={4} key={post.id} sx={{ display: 'flex', justifyContent: 'center' }}>
+              <LegacyGrid item xs={12} sm={6} md={4} key={post.id} sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Box sx={{ width: '100%', maxWidth: '360px' }}>
                   <BlogCard post={post} />
                 </Box>
-              </Grid>
+              </LegacyGrid>
             ))}
-          </Grid>
+          </LegacyGrid>
           
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
             <Button 
@@ -610,13 +610,13 @@ const Home = () => {
             textAlign: 'center'
           }}>
             {/* Categories and links in centered Grid - UPDATED SPACING FOR MOBILE */}
-            <Grid 
+            <LegacyGrid 
               container 
               spacing={{ xs: 4, sm: 8, md: 35 }}
               sx={{ maxWidth: '1000px', justifyContent: 'center' }}
             >
               {/* Product Column */}
-              <Grid item xs={12} sm={4} md={4}>
+              <LegacyGrid item xs={12} sm={4} md={4}>
                 <Typography variant="subtitle1" sx={{ 
                   fontWeight: 'bold', 
                   mb: { xs: 1.5, sm: 2.5 },  // Less margin on mobile
@@ -645,10 +645,10 @@ const Home = () => {
                     </Box>
                   ))}
                 </Box>
-              </Grid>
+              </LegacyGrid>
               
               {/* Services Column */}
-              <Grid item xs={12} sm={4} md={4}>
+              <LegacyGrid item xs={12} sm={4} md={4}>
                 <Typography variant="subtitle1" sx={{ 
                   fontWeight: 'bold', 
                   mb: { xs: 1.5, sm: 2.5 },  // Less margin on mobile
@@ -677,10 +677,10 @@ const Home = () => {
                     </Box>
                   ))}
                 </Box>
-              </Grid>
+              </LegacyGrid>
               
               {/* Company Column */}
-              <Grid item xs={12} sm={4} md={4}>
+              <LegacyGrid item xs={12} sm={4} md={4}>
                 <Typography variant="subtitle1" sx={{ 
                   fontWeight: 'bold', 
                   mb: { xs: 1.5, sm: 2.5 },  // Less margin on mobile
@@ -709,8 +709,8 @@ const Home = () => {
                     </Box>
                   ))}
                 </Box>
-              </Grid>
-            </Grid>
+              </LegacyGrid>
+            </LegacyGrid>
           </Box>
         </Box>
       </Box>
