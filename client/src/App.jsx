@@ -17,59 +17,101 @@ const PrivateRoute = ({ isAuthenticated, children }) => {
   return isAuthenticated ? children : <Navigate to="/account" />;
 }
 
+// Layout components
+const MainLayout = ({ children }) => (
+  <>
+    <Header />
+    {children}
+  </>
+);
+
+const AuthLayout = ({ children }) => (
+  <>
+    {children}
+  </>
+);
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!sessionStorage.getItem('accessToken'));
   
   return (
     <DataProvider>
       <BrowserRouter>
-        <Header />
         <Routes>
-          {/* Public routes - always accessible without login */}
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/account" element={<Login isUserAuthenticated={setIsAuthenticated} />} />
+          {/* Auth routes (no header) */}
+          <Route path="/account" element={
+            <AuthLayout>
+              <Login isUserAuthenticated={setIsAuthenticated} />
+            </AuthLayout>
+          } />
           
-          {/* Protected routes - require authentication */}
+          {/* Public routes with Header */}
+          <Route path="/" element={
+            <MainLayout>
+              <Home />
+            </MainLayout>
+          } />
+          
+          <Route path="/about" element={
+            <MainLayout>
+              <About />
+            </MainLayout>
+          } />
+          
+          {/* Protected routes with Header */}
           <Route path="/create" element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <CreatePost />
+              <MainLayout>
+                <CreatePost />
+              </MainLayout>
             </PrivateRoute>
           } />
           
           <Route path="/details/:id" element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <DetailView />
+              <MainLayout>
+                <DetailView />
+              </MainLayout>
             </PrivateRoute>
           } />
           
           <Route path="/update/:id" element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <Update />
+              <MainLayout>
+                <Update />
+              </MainLayout>
             </PrivateRoute>
           } />
           
           <Route path="/contact" element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <Contact />
+              <MainLayout>
+                <Contact />
+              </MainLayout>
             </PrivateRoute>
           } />
           
           <Route path="/search" element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <Home />
+              <MainLayout>
+                <Home />
+              </MainLayout>
             </PrivateRoute>
           } />
           
           <Route path="/blog" element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <Home />
+              <MainLayout>
+                <Home />
+              </MainLayout>
             </PrivateRoute>
           } />
           
           <Route path="/subscribe" element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
-              <Home />
+              <MainLayout>
+                <Home />
+              </MainLayout>
             </PrivateRoute>
           } />
         </Routes>
