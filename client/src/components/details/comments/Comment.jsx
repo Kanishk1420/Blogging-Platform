@@ -1,56 +1,56 @@
-import { useContext } from "react";
-
-import { Typography, Box, styled } from "@mui/material";
-import { Delete } from '@mui/icons-material';
+import { useContext, useState } from "react";
+import { Typography, Box } from "@mui/material";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 import { API } from '../../../service/api';
 import { DataContext } from "../../../context/DataProvider";
 
-const Component = styled(Box)`
-    margin-top: 30px;
-    background: #F5F5F5;
-    padding: 10px;
-`;
-
-const Container = styled(Box)`
-    display: flex;
-    margin-bottom: 5px;
-`;
-
-const Name = styled(Typography)`
-    font-weight: 600,
-    font-size: 18px;
-    margin-right: 20px;
-`;
-
-const StyledDate = styled(Typography)`
-    font-size: 14px;
-    color: #878787;
-`;
-
-const DeleteIcon = styled(Delete)`
-    margin-left: auto;
-`;
-
 const Comment = ({ comment, setToggle }) => {
-
-    const { account } = useContext(DataContext)
+    const { account } = useContext(DataContext);
+    const [deleting, setDeleting] = useState(false);
     
     const removeComment = async () => {
-       await API.deleteComment(comment._id);
-       setToggle(prev => !prev);
+        if (window.confirm("Are you sure you want to delete this comment?")) {
+            setDeleting(true);
+            await API.deleteComment(comment._id);
+            setToggle(prev => !prev);
+        }
     }
 
     return (
-        <Component>
-            <Container>
-                <Name>{comment.name}</Name>
-                <StyledDate>{new Date(comment.date).toDateString()}</StyledDate>
-                { comment.name === account.username && <DeleteIcon onClick={() => removeComment()} /> }
-            </Container>
-            <Typography>{comment.comments}</Typography>
-        </Component>
-    )
-}
+        <div className="mt-6 bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200">
+            <div className="flex justify-between items-center mb-2">
+                <div className="flex items-center">
+                    <div className="h-8 w-8 rounded-full bg-[#1565D8] text-white flex items-center justify-center mr-2">
+                        {comment.name.charAt(0).toUpperCase()}
+                    </div>
+                    <span className="font-semibold text-gray-800">{comment.name}</span>
+                </div>
+                <span className="text-sm text-gray-500">
+                    {new Date(comment.date).toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        day: 'numeric',
+                        year: 'numeric'
+                    })}
+                </span>
+            </div>
+            
+            <p className="text-gray-700 mt-2">{comment.comments}</p>
+            
+            {comment.name === account.username && 
+                <div className="mt-3 flex justify-end">
+                    <button 
+                        onClick={removeComment}
+                        disabled={deleting}
+                        className="text-red-500 hover:text-red-600 text-xs flex items-center transition-colors duration-200"
+                    >
+                        <DeleteOutlineIcon fontSize="small" className="mr-1" />
+                        {deleting ? "Deleting..." : "Delete"}
+                    </button>
+                </div>
+            }
+        </div>
+    );
+};
 
 export default Comment;

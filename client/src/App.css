@@ -1,3 +1,16 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
+  margin-top: 64px; /* Match height of header */
+}
+
+a {
+  text-decoration: none;
+}
+
 .btn {
   background: unset;
   border: none;

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { API } from '../../service/api';
 import { DataContext } from '../../context/DataProvider';
 
+// Initial values remain the same
 const loginInitialValues = {
     username: '',
     password: ''
@@ -26,6 +27,7 @@ const Login = ({ isUserAuthenticated }) => {
     const navigate = useNavigate();
     const { setAccount } = useContext(DataContext);
 
+    // Updated with a sleeker logo or keep your existing one
     const imageURL = 'https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png';
 
     useEffect(() => {
@@ -36,18 +38,18 @@ const Login = ({ isUserAuthenticated }) => {
         if (errorTimeoutRef.current) {
             clearTimeout(errorTimeoutRef.current);
         }
-    }, [login])
+    }, [login]);
     
-    // Set up auto-dismiss for error messages
+    // Auto-dismiss for error messages
     useEffect(() => {
         if (error) {
             // Set a timeout to clear the error after 5 seconds
             errorTimeoutRef.current = setTimeout(() => {
                 showError('');
-            }, 4000);
+            }, 5000); // 5 seconds
         }
         
-        // Cleanup function to clear timeout when component unmounts or error changes
+        // Cleanup function
         return () => {
             if (errorTimeoutRef.current) {
                 clearTimeout(errorTimeoutRef.current);
@@ -76,11 +78,9 @@ const Login = ({ isUserAuthenticated }) => {
                 setLogin(loginInitialValues);
                 navigate('/');
             } else {
-                // Display the specific error message from the API
                 showError(response.msg || 'Username or password is incorrect');
             }
         } catch (error) {
-            // More specific authentication error instead of server connection error
             showError('Username or password is incorrect');
         }
     }
@@ -93,7 +93,6 @@ const Login = ({ isUserAuthenticated }) => {
                 setSignup(signupInitialValues);
                 toggleAccount('login');
             } else {
-                // Display specific signup error from the API
                 showError(response.msg || 'Username already exists or invalid information');
             }
         } catch (error) {
@@ -103,7 +102,7 @@ const Login = ({ isUserAuthenticated }) => {
 
     const toggleSignup = () => {
         account === 'signup' ? toggleAccount('login') : toggleAccount('signup');
-        showError(''); // Clear any errors when switching forms
+        showError('');
     }
 
     const toggleLoginPasswordVisibility = () => {
@@ -115,10 +114,20 @@ const Login = ({ isUserAuthenticated }) => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100 font-['Roboto',sans-serif]">
-            <div className="w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="flex items-center justify-center min-h-screen bg-gray-50 font-['Roboto',sans-serif] pt-16">
+            <div className="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
                 <div className="flex flex-col items-center pt-10 pb-6">
-                    <img src={imageURL} alt="blog" className="w-32 mb-6" />
+                    <div className="text-2xl font-bold text-[#1565D8] mb-6">Bloggify</div>
+                    {/* Or keep your original logo */}
+                    {/* <img src={imageURL} alt="blog" className="w-32 mb-6" /> */}
+                    
+                    <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                        {account === 'login' ? 'Welcome back' : 'Create an account'}
+                    </h2>
+                    <p className="text-gray-500 text-sm mb-6">
+                        {account === 'login' ? 'Sign in to access your account' : 'Join our blogging community'}
+                    </p>
+                    
                     {error && (
                         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded-md w-[80%] mb-4 text-center relative">
                             {error}
@@ -135,7 +144,7 @@ const Login = ({ isUserAuthenticated }) => {
                 {account === 'login' ? (
                     <div className="px-8 pb-8">
                         <div className="mb-6">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+                            <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="username">
                                 Username
                             </label>
                             <input
@@ -149,7 +158,7 @@ const Login = ({ isUserAuthenticated }) => {
                             />
                         </div>
                         <div className="mb-6 relative">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                            <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="password">
                                 Password
                             </label>
                             <div className="relative">
@@ -168,12 +177,10 @@ const Login = ({ isUserAuthenticated }) => {
                                     onClick={toggleLoginPasswordVisibility}
                                 >
                                     {showLoginPassword ? (
-                                        // Eye icon (hidden)
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-gray-500">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
                                         </svg>
                                     ) : (
-                                        // Eye icon (visible)
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-gray-500">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -185,10 +192,10 @@ const Login = ({ isUserAuthenticated }) => {
                         
                         <div className="mb-6">
                             <button
-                                className="w-full bg-[#1565D8] hover:bg-[#0d4fb8] text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200"
+                                className="w-full bg-[#1565D8] hover:bg-[#0d4fb8] text-white font-medium py-3 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-200"
                                 onClick={loginUser}
                             >
-                                Log In
+                                Sign In
                             </button>
                         </div>
                         
@@ -200,7 +207,7 @@ const Login = ({ isUserAuthenticated }) => {
                         
                         <div className="mt-6">
                             <button
-                                className="w-full bg-white hover:bg-gray-100 text-[#1565D8] border-[#1565D8] font-bold py-3 px-4 rounded border focus:outline-none focus:shadow-outline transition duration-200"
+                                className="w-full bg-white hover:bg-gray-50 text-[#1565D8] font-medium py-3 px-4 rounded-full border border-[#1565D8] focus:outline-none focus:shadow-outline transition duration-200"
                                 onClick={toggleSignup}
                             >
                                 Create an account
@@ -210,7 +217,7 @@ const Login = ({ isUserAuthenticated }) => {
                 ) : (
                     <div className="px-8 pb-8">
                         <div className="mb-6">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                            <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="name">
                                 Name
                             </label>
                             <input
@@ -223,7 +230,7 @@ const Login = ({ isUserAuthenticated }) => {
                             />
                         </div>
                         <div className="mb-6">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="signup-username">
+                            <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="signup-username">
                                 Username
                             </label>
                             <input
@@ -236,7 +243,7 @@ const Login = ({ isUserAuthenticated }) => {
                             />
                         </div>
                         <div className="mb-6 relative">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="signup-password">
+                            <label className="block text-gray-700 text-sm font-medium mb-2" htmlFor="signup-password">
                                 Password
                             </label>
                             <div className="relative">
@@ -254,12 +261,10 @@ const Login = ({ isUserAuthenticated }) => {
                                     onClick={toggleSignupPasswordVisibility}
                                 >
                                     {showSignupPassword ? (
-                                        // Eye icon (hidden)
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-gray-500">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
                                         </svg>
                                     ) : (
-                                        // Eye icon (visible)
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-gray-500">
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                                             <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -271,7 +276,7 @@ const Login = ({ isUserAuthenticated }) => {
                         
                         <div className="mb-6">
                             <button
-                                className="w-full bg-[#1565D8] hover:bg-[#0d4fb8] text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200"
+                                className="w-full bg-[#1565D8] hover:bg-[#0d4fb8] text-white font-medium py-3 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-200"
                                 onClick={signupUser}
                             >
                                 Sign Up
@@ -286,7 +291,7 @@ const Login = ({ isUserAuthenticated }) => {
                         
                         <div className="mt-6">
                             <button
-                                className="w-full bg-white hover:bg-gray-100 text-[#1565D8] border-[#1565D8] font-bold py-3 px-4 rounded border focus:outline-none focus:shadow-outline transition duration-200"
+                                className="w-full bg-white hover:bg-gray-50 text-[#1565D8] font-medium py-3 px-4 rounded-full border border-[#1565D8] focus:outline-none focus:shadow-outline transition duration-200"
                                 onClick={toggleSignup}
                             >
                                 Already have an account
@@ -296,7 +301,7 @@ const Login = ({ isUserAuthenticated }) => {
                 )}
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Login;
