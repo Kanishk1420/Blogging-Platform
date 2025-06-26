@@ -4,8 +4,89 @@ import SearchIcon from '@mui/icons-material/Search';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { Link, useNavigate } from 'react-router-dom';
 
-// Import your SVG 
+// Import all SVGs for the slider
 import publishArticleSVG from '../../assets/undraw_blogging_t042.svg';
+import blogSVG from '../../assets/undraw_blog_1ca8.svg';
+import blogPostSVG from '../../assets/undraw_blog-post_f68f.svg';
+import fashionBloggingSVG from '../../assets/undraw_fashion-blogging_wfoz.svg';
+import publishSVG from '../../assets/undraw_publish-article_u3z6.svg';
+
+// Image Slider/Carousel Component
+const ImageSlider = () => {
+  // Array of images for the slider
+  const images = [
+    { src: publishArticleSVG, alt: "Blogging illustration" },
+    { src: blogSVG, alt: "Blog illustration" },
+    { src: blogPostSVG, alt: "Blog post illustration" },
+    { src: fashionBloggingSVG, alt: "Fashion blogging illustration" },
+    { src: publishSVG, alt: "Publishing article illustration" }
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Auto-slide effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 5000); // Change slide every 3.5 seconds
+
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, [images.length]);
+
+  return (
+    <Box sx={{ 
+      position: 'relative', 
+      width: '100%', 
+      height: '450px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      overflow: 'hidden'
+    }}>
+      {images.map((image, index) => (
+        <Box
+          key={index}
+          component="img"
+          src={image.src}
+          alt={image.alt}
+          sx={{
+            position: 'absolute',
+            maxWidth: '90%',
+            maxHeight: '450px',
+            opacity: index === currentIndex ? 1 : 0,
+            transition: 'opacity 0.8s ease-in-out',
+            zIndex: index === currentIndex ? 1 : 0,
+          }}
+        />
+      ))}
+      
+      {/* Optional: Dots indicator */}
+      <Box sx={{ 
+        position: 'absolute', 
+        bottom: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+        pb: 2,
+        zIndex: 2
+      }}>
+        {images.map((_, index) => (
+          <Box
+            key={index}
+            sx={{
+              width: 8,
+              height: 8,
+              borderRadius: '50%',
+              mx: 0.5,
+              backgroundColor: index === currentIndex ? '#2563EB' : 'rgba(0,0,0,0.2)',
+              transition: 'background-color 0.3s ease'
+            }}
+          />
+        ))}
+      </Box>
+    </Box>
+  );
+};
 
 // Sample blog post data (replace with API data later)
 const samplePosts = [
@@ -265,14 +346,9 @@ const Home = () => {
             </div>
           </div>
           
-          {/* Right Image Section */}
+          {/* Right Image Section - Replace static image with Slider */}
           <div className="w-full md:w-1/2 flex justify-center">
-            <img 
-              src={publishArticleSVG} 
-              alt="Publishing articles illustration" 
-              className="max-w-full h-auto" 
-              style={{ maxHeight: '450px' }}
-            />
+            <ImageSlider />
           </div>
         </div>
       </div>
