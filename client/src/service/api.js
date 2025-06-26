@@ -3,10 +3,9 @@ import axios from 'axios';
 import { API_NOTIFICATION_MESSAGES, SERVICE_URLS } from '../constants/config';
 import { getAccessToken, getType } from '../utils/common-utils';
 
-const API_URL = 'http://localhost:8000';
+axios.defaults.baseURL = 'http://localhost:8000';
 
 const axiosInstance = axios.create({
-    baseURL: API_URL,
     timeout: 10000, 
     headers: {
         "content-type": "application/json"
@@ -140,3 +139,29 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
 }
 
 export { API };
+
+export const userLogin = async (data) => {
+    try {
+        const response = await axios.post('/login', data);
+        return { isSuccess: true, data: response.data };
+    } catch (error) {
+        console.log('ERROR IN RESPONSE: ', error);
+        
+        // Extract specific error message from the server response
+        const errorMsg = error.response?.data?.msg || 'Login failed. Please try again.';
+        return { isSuccess: false, msg: errorMsg };
+    }
+}
+
+export const userSignup = async (data) => {
+    try {
+        const response = await axios.post('/signup', data);
+        return { isSuccess: true, data: response.data };
+    } catch (error) {
+        console.log('ERROR IN RESPONSE: ', error);
+        
+        // Extract specific error message from the server response
+        const errorMsg = error.response?.data?.msg || 'Signup failed. Please try again.';
+        return { isSuccess: false, msg: errorMsg };
+    }
+}
