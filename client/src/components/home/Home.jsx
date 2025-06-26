@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Button, TextField, InputAdornment, Typography, Grid, Card, CardContent, CardMedia, Avatar } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Import your SVG 
 import publishArticleSVG from '../../assets/undraw_blogging_t042.svg';
@@ -184,8 +184,19 @@ const BlogCard = ({ post }) => {
 };
 
 const Home = () => {
-  // In a real app, you'd fetch posts from an API
+  const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
+  
+  // Keep this function as-is, it's already doing what you need
+  const checkAuthAndProceed = (destination) => {
+    const accessToken = sessionStorage.getItem('accessToken');
+    if (!accessToken) {
+      // Pass the destination in state so we can return after login
+      navigate('/account', { state: { from: destination } });
+    } else {
+      navigate(destination);
+    }
+  };
   
   useEffect(() => {
     // Simulate API call
@@ -208,7 +219,7 @@ const Home = () => {
               content from our community of passionate writers and industry experts.
             </p>
             
-            {/* Search Box with Fixed Width */}
+            {/* Search Box - Modified with auth check */}
             <div className="bg-white rounded-lg shadow-md flex mb-8 max-w-screen">
               <TextField
                 placeholder="Search article"
@@ -228,6 +239,8 @@ const Home = () => {
               />
               <Button 
                 variant="contained" 
+                onClick={() => checkAuthAndProceed('/search')}
+
                 sx={{ 
                   bgcolor: '#2563EB',
                   '&:hover': { bgcolor: '#1D4ED8' },
@@ -290,8 +303,7 @@ const Home = () => {
             <Button 
               variant="outlined" 
               endIcon={<ArrowForwardIcon />}
-              component={Link}
-              to="/blog"
+              onClick={() => checkAuthAndProceed('/blog')}
               sx={{
                 borderColor: '#2563EB',
                 color: '#2563EB',
@@ -371,6 +383,7 @@ const Home = () => {
                 />
                 <Button 
                   variant="contained"
+                  onClick={() => checkAuthAndProceed('/subscribe')}
                   sx={{
                     bgcolor: '#2563EB',
                     '&:hover': { bgcolor: '#1D4ED8' },

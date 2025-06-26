@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { API } from '../../service/api';
 import { DataContext } from '../../context/DataProvider';
 
@@ -25,6 +25,7 @@ const Login = ({ isUserAuthenticated }) => {
     const [showSignupPassword, setShowSignupPassword] = useState(false);
 
     const navigate = useNavigate();
+    const location = useLocation();
     const { setAccount } = useContext(DataContext);
 
     // Updated with a sleeker logo or keep your existing one
@@ -65,6 +66,12 @@ const Login = ({ isUserAuthenticated }) => {
         setSignup({ ...signup, [e.target.name]: e.target.value });
     }
 
+    const navigateBack = () => {
+        // Check if there's a previous path stored in state (passed when redirecting here)
+        const returnPath = location.state?.from || '/';
+        navigate(returnPath);
+    };
+
     const loginUser = async () => {
         try {
             let response = await API.userLogin(login);
@@ -72,11 +79,13 @@ const Login = ({ isUserAuthenticated }) => {
                 showError('');
                 sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
                 sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
+                sessionStorage.setItem('username', response.data.username);
+                sessionStorage.setItem('name', response.data.name);
                 setAccount({ name: response.data.name, username: response.data.username });
                 
                 isUserAuthenticated(true);
                 setLogin(loginInitialValues);
-                navigate('/');
+                navigateBack(); // This will send the user back to the destination
             } else {
                 showError(response.msg || 'Username or password is incorrect');
             }
