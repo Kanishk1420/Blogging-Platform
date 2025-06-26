@@ -44,11 +44,15 @@ const Header = () => {
     navigate("/account");
   };
 
-  // Handle click outside to close dropdown
+  // Handle click outside to close dropdowns
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(false);
+      }
+      
+      if (mobileDropdownRef.current && !mobileDropdownRef.current.contains(event.target)) {
+        setShowMobileDropdown(false);
       }
       
       if (mobileMenuRef.current && 
@@ -58,8 +62,8 @@ const Header = () => {
       }
     }
 
-    // Add event listener when dropdown or mobile menu is open
-    if (showDropdown || mobileMenuOpen) {
+    // Add event listener when any dropdown or mobile menu is open
+    if (showDropdown || showMobileDropdown || mobileMenuOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
@@ -67,7 +71,7 @@ const Header = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [showDropdown, mobileMenuOpen]);
+  }, [showDropdown, showMobileDropdown, mobileMenuOpen]);
 
   return (
     <AppBar
@@ -245,12 +249,12 @@ const Header = () => {
             <div className="px-6 py-3">
               <div 
                 className="flex justify-between items-center text-gray-700 hover:text-[#1565D8] text-base font-medium cursor-pointer"
-                onClick={() => setShowMobileDropdown(!showMobileDropdown)}
+                onClick={() => setShowMobileDropdown(!showMobileDropdown)} // Use the mobile-specific state
               >
                 Pages
                 <ArrowDropDownIcon />
               </div>
-              {showMobileDropdown && (
+              {showMobileDropdown && ( // Use the mobile-specific state
                 <div className="pl-4 mt-2 border-l-2 border-gray-200">
                   <div 
                     onClick={() => checkAuthAndProceed('/create')}
