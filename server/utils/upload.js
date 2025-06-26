@@ -1,13 +1,16 @@
 import multer from 'multer';
 import { GridFsStorage } from 'multer-gridfs-storage';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const storage = new GridFsStorage({
-    url: `mongodb://user:codeforinterview@blogweb-shard-00-00.ch1hk.mongodb.net:27017,blogweb-shard-00-01.ch1hk.mongodb.net:27017,blogweb-shard-00-02.ch1hk.mongodb.net:27017/BLOG?ssl=true&replicaSet=atlas-lhtsci-shard-0&authSource=admin&retryWrites=true&w=majority`,
-    options: { useNewUrlParser: true },
+    url: process.env.MONGODB_URI,
+    options: { useNewUrlParser: true, useUnifiedTopology: true },
     file: (request, file) => {
-        const match = ["image/png", "image/jpg"];
+        const match = ["image/png", "image/jpg", "image/jpeg"];
 
-        if(match.indexOf(file.memeType) === -1) 
+        if(match.indexOf(file.mimetype) === -1) 
             return`${Date.now()}-blog-${file.originalname}`;
 
         return {
@@ -17,4 +20,4 @@ const storage = new GridFsStorage({
     }
 });
 
-export default multer({storage}); 
+export default multer({storage});
