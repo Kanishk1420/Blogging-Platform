@@ -3,18 +3,19 @@ import { AppBar, Toolbar } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close"; 
+import CloseIcon from "@mui/icons-material/Close";
 import { DataContext } from "../../context/DataProvider";
+import bloggifyLogo from "../../assets/Bloggify.png";
 
 const Header = () => {
   const navigate = useNavigate();
   const { account } = useContext(DataContext);
-  
+
   // Separate states for desktop and mobile dropdowns
   const [showDropdown, setShowDropdown] = useState(false);
   const [showMobileDropdown, setShowMobileDropdown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
+
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const mobileDropdownRef = useRef(null);
@@ -22,13 +23,13 @@ const Header = () => {
   // Update the checkAuthAndProceed function to handle redirection properly
   const checkAuthAndProceed = (destination) => {
     console.log("Attempting to navigate to:", destination); // For debugging
-    const accessToken = sessionStorage.getItem('accessToken');
+    const accessToken = sessionStorage.getItem("accessToken");
     setMobileMenuOpen(false); // Close the menu regardless
-    
+
     if (!accessToken) {
       console.log("No token found, redirecting to login"); // For debugging
       // Redirect to login if not authenticated
-      navigate('/account', { state: { from: destination } });
+      navigate("/account", { state: { from: destination } });
     } else {
       console.log("Token found, proceeding to destination"); // For debugging
       // Proceed to destination if authenticated
@@ -50,14 +51,19 @@ const Header = () => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(false);
       }
-      
-      if (mobileDropdownRef.current && !mobileDropdownRef.current.contains(event.target)) {
+
+      if (
+        mobileDropdownRef.current &&
+        !mobileDropdownRef.current.contains(event.target)
+      ) {
         setShowMobileDropdown(false);
       }
-      
-      if (mobileMenuRef.current && 
-          !mobileMenuRef.current.contains(event.target) && 
-          !event.target.classList.contains('hamburger-button')) {
+
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target) &&
+        !event.target.classList.contains("hamburger-button")
+      ) {
         setMobileMenuOpen(false);
       }
     }
@@ -89,9 +95,13 @@ const Header = () => {
     >
       <Toolbar className="flex items-center px-6 py-2">
         {/* Logo - Left Aligned */}
-        <div className="flex-shrink-0 mr-8">
+        <div className="flex-shrink-0 mr-8 h-10 md:h-12 flex items-center overflow-visible">
           <Link to="/" className="flex items-center no-underline">
-            <span className="text-2xl font-bold text-[#1565D8]">Bloggify</span>
+            <img
+              src={bloggifyLogo}
+              alt="Bloggify"
+              className="h-12 md:h-16 transform scale-245 origin-left transition-all duration-300 hover:opacity-90"
+            />
           </Link>
         </div>
 
@@ -147,7 +157,7 @@ const Header = () => {
         {/* User Account or Sign in - Right Aligned */}
         <div className="flex items-center ml-auto">
           {/* Hamburger menu button - visible only on mobile */}
-          <button 
+          <button
             className="md:hidden mr-4 hamburger-button focus:outline-none"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
@@ -192,10 +202,10 @@ const Header = () => {
       </Toolbar>
 
       {/* Mobile Menu - Slide in from right */}
-      <div 
+      <div
         ref={mobileMenuRef}
         className={`fixed inset-y-0 right-0 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 md:hidden ${
-          mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="h-full flex flex-col">
@@ -233,21 +243,21 @@ const Header = () => {
           {/* Navigation Links */}
           <div className="flex-grow overflow-y-auto py-4">
             <div
-              onClick={() => navigate('/')}
+              onClick={() => navigate("/")}
               className="block px-6 py-3 text-gray-700 hover:text-[#1565D8] hover:bg-blue-50 text-base font-medium transition-colors duration-200 no-underline cursor-pointer"
             >
               Home
             </div>
             <div
-              onClick={() => navigate('/about')}
+              onClick={() => navigate("/about")}
               className="block px-6 py-3 text-gray-700 hover:text-[#1565D8] hover:bg-blue-50 text-base font-medium transition-colors duration-200 no-underline cursor-pointer"
             >
               About
             </div>
-            
+
             {/* Pages submenu */}
             <div className="px-6 py-3">
-              <div 
+              <div
                 className="flex justify-between items-center text-gray-700 hover:text-[#1565D8] text-base font-medium cursor-pointer"
                 onClick={() => setShowMobileDropdown(!showMobileDropdown)} // Use the mobile-specific state
               >
@@ -256,14 +266,14 @@ const Header = () => {
               </div>
               {showMobileDropdown && ( // Use the mobile-specific state
                 <div className="pl-4 mt-2 border-l-2 border-gray-200">
-                  <div 
-                    onClick={() => checkAuthAndProceed('/create')}
+                  <div
+                    onClick={() => checkAuthAndProceed("/create")}
                     className="block py-2 text-gray-700 hover:text-[#1565D8] text-base no-underline cursor-pointer"
                   >
                     Create Post
                   </div>
                   <div
-                    onClick={() => checkAuthAndProceed('/')}
+                    onClick={() => checkAuthAndProceed("/")}
                     className="block py-2 text-gray-700 hover:text-[#1565D8] text-base no-underline cursor-pointer"
                   >
                     All Posts
@@ -271,9 +281,9 @@ const Header = () => {
                 </div>
               )}
             </div>
-            
+
             <div
-              onClick={() => checkAuthAndProceed('/contact')}
+              onClick={() => checkAuthAndProceed("/contact")}
               className="block px-6 py-3 text-gray-700 hover:text-[#1565D8] hover:bg-blue-50 text-base font-medium transition-colors duration-200 no-underline cursor-pointer"
             >
               Contact
@@ -284,7 +294,7 @@ const Header = () => {
 
       {/* Optional overlay when mobile menu is open */}
       {mobileMenuOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black opacity-50 z-40 md:hidden"
           onClick={() => setMobileMenuOpen(false)}
         />

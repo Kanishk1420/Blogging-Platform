@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { API } from '../../service/api';
 import { DataContext } from '../../context/DataProvider';
+import bloggifyLogo from "../../assets/Bloggify.png";
 
 // Initial values remain the same
 const loginInitialValues = {
@@ -27,9 +28,6 @@ const Login = ({ isUserAuthenticated }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const { setAccount } = useContext(DataContext);
-
-    // Updated with a sleeker logo or keep your existing one
-    const imageURL = 'https://www.sesta.it/wp-content/uploads/2021/03/logo-blog-sesta-trasparente.png';
 
     useEffect(() => {
         // Clear any existing error message
@@ -123,12 +121,16 @@ const Login = ({ isUserAuthenticated }) => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-50 font-['Roboto',sans-serif] pt-16">
+        <div className="flex items-center justify-center min-h-screen bg-gray-50 font-['Roboto',sans-serif] pt-12">
             <div className="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
-                <div className="flex flex-col items-center pt-10 pb-6">
-                    <div className="text-2xl font-bold text-[#1565D8] mb-6">Bloggify</div>
-                    {/* Or keep your original logo */}
-                    {/* <img src={imageURL} alt="blog" className="w-32 mb-6" /> */}
+                <div className="flex flex-col items-center">
+                    <div className="mb-0">
+                        <img
+                            src={bloggifyLogo}
+                            alt="Bloggify"
+                            className="h-45 transition-all duration-300 hover:opacity-90"
+                        />
+                    </div>
                     
                     <h2 className="text-2xl font-bold text-gray-800 mb-2">
                         {account === 'login' ? 'Welcome back' : 'Create an account'}
